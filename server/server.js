@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 
-import skills from './services/technologyService.js';
+import { skills } from './services/technologyService.js';
+import analyzeRouter from './routes/analyze.js';
 
 const app = express();
 
@@ -15,7 +16,9 @@ app.get('/api/test', (req, res) => {
     });
 });
 
-const PORT = 8081;
+app.use('/api/analyze', analyzeRouter);
+
+const PORT = 3000;
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
