@@ -1,0 +1,3 @@
+[submodule "server/MIND-tech-ontology"]
+	path = server/MIND-tech-ontology
+	url = https://github.com/carleoj/MIND-tech-ontology.git
