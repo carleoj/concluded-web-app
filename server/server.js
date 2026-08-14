@@ -3,6 +3,7 @@ import cors from 'cors';
 
 import { skills } from './services/technologyService.js';
 import analyzeRouter from './routes/analyze.js';
+import technologiesRouter from './routes/technologies.js';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get('/api/test', (req, res) => {
 });
 
 app.use('/api/analyze', analyzeRouter);
+app.use('/api/technologies', technologiesRouter);
 
 const PORT = 3000;
 

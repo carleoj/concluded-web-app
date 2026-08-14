@@ -1,26 +1,121 @@
-function App() {
-  const userStack: string[] = [
-    "React",
-    "JavaScript",
-    "Node.js",
-    "Express",
-    "MySQL",
-    "Docker"
-  ]
-  return (
-    <div className="flex flex-col items-center">
-      <div className="w-100 self-center flex flex-col items-center pt-10">
-        <label className="font-crimson text-3xl mb-2" htmlFor="text">Your tech stack</label>
-        <input className="py-20 px-12 sm:px-30 sm:py-27 lg:px-50 bg-gray-100 focus:bg-white rounded border border-zinc-950" type="text" placeholder="HTML/CSS, Java, C++,..." />
-      </div>
+import { useRef, useState } from 'react'
+import { analyzeJob } from './services/api'
+import type { AnalyzeResult } from './types'
+import { useTechStack } from './hooks/useTechStack'
+import Navbar from './components/Navbar'
+import Hero from './components/Hero'
+import TechStackSelector from './components/TechStackSelector'
+import JobDescriptionInput from './components/JobDescriptionInput'
+import AnalyzeButton from './components/AnalyzeButton'
+import MatchResult from './components/MatchResult'
+import HowItWorks from './components/HowItWorks'
+import TechnologyExplanation from './components/TechnologyExplanation'
 
-      <div className="w-100 self-center items-center flex flex-col pt-10">
-        <label className="font-crimson text-3xl mb-2" htmlFor="text">Job description</label>
-        <input className="py-20 px-12 sm:px-30 sm:py-27 lg:px-50 bg-gray-100 focus:bg-white rounded border border-zinc-950" type="text" placeholder="Requirements: C++, ..." />
-      </div>
-      <div>
-        <button className="mt-6 p-4 bg-green-600 text-white self-center rounded hover:bg-green-700 hover:cursor-pointer transition-all duration-100 ease-in">Analyze Fit</button>
-      </div>
+function App() {
+  const analyzerRef = useRef<HTMLElement>(null)
+  const resultsRef = useRef<HTMLDivElement>(null)
+  const { techStack, addTechnology, removeTechnology, clearStack } = useTechStack()
+  const [jobDescription, setJobDescription] = useState('')
+  const [result, setResult] = useState<AnalyzeResult | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [hasAnalyzed, setHasAnalyzed] = useState(false)
+
+  const canAnalyze =
+    techStack.length > 0 && jobDescription.trim().length > 0 && !isLoading
+
+  function scrollToAnalyzer() {
+    analyzerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  function scrollToResults() {
+    resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  async function handleAnalyze() {
+    if (!canAnalyze) {
+      return
+    }
+
+    setIsLoading(true)
+    setError(null)
+    setHasAnalyzed(true)
+
+    try {
+      const analysis = await analyzeJob(techStack, jobDescription.trim())
+      setResult(analysis)
+      window.requestAnimationFrame(scrollToResults)
+    } catch (analyzeError) {
+      console.error(analyzeError)
+      setResult(null)
+      setError('failed')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-background text-primary">
+      <Navbar />
+      <main>
+        <Hero onStartAnalyzing={scrollToAnalyzer} />
+
+        <section
+          ref={analyzerRef}
+          id="analyzer"
+          className="scroll-mt-28 px-4 pb-12 sm:px-6"
+        >
+          <div className="mx-auto max-w-6xl rounded-[28px] border border-border bg-surface px-6 py-8 shadow-sm sm:px-10 sm:py-10">
+            <div className="space-y-10">
+              <TechStackSelector
+                techStack={techStack}
+                onAdd={addTechnology}
+                onRemove={removeTechnology}
+                onClear={clearStack}
+              />
+
+              <JobDescriptionInput
+                value={jobDescription}
+                onChange={setJobDescription}
+              />
+
+              <div className="space-y-3">
+                <AnalyzeButton
+                  disabled={!canAnalyze}
+                  isLoading={isLoading}
+                  onClick={handleAnalyze}
+                />
+                {techStack.length === 0 && (
+                  <p className="text-sm text-muted">
+                    Select at least one technology to enable analysis.
+                  </p>
+                )}
+                {techStack.length > 0 && !jobDescription.trim() && (
+                  <p className="text-sm text-muted">
+                    Paste a job description to analyze the technical match.
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {(hasAnalyzed || isLoading || error) && (
+          <div ref={resultsRef} className="scroll-mt-28 px-4 pb-12 sm:px-6">
+            <div className="mx-auto max-w-6xl">
+              <MatchResult
+                result={result}
+                isLoading={isLoading}
+                error={error}
+                onRetry={handleAnalyze}
+              />
+            </div>
+          </div>
+        )}
+
+        <HowItWorks />
+        <TechnologyExplanation />
+      </main>
     </div>
   )
 }
