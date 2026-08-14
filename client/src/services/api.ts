@@ -1,4 +1,4 @@
-import type { AnalyzeResult, TechnologySearchResponse } from './types'
+import type { AnalyzeResult, TechnologySearchResponse } from '../types'
 
 const API_BASE = '/api'
 

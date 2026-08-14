@@ -63,9 +63,9 @@ function App() {
         <section
           ref={analyzerRef}
           id="analyzer"
-          className="scroll-mt-28 px-4 pb-12 sm:px-6"
+          className="scroll-mt-28 px-4 pb-16 sm:px-6"
         >
-          <div className="mx-auto max-w-6xl rounded-[28px] border border-border bg-surface px-6 py-8 shadow-sm sm:px-10 sm:py-10">
+          <div className="mx-auto max-w-6xl border-b border-primary/15 border-t-2 border-t-action px-1 py-10 sm:px-0 sm:py-14">
             <div className="space-y-10">
               <TechStackSelector
                 techStack={techStack}
@@ -77,6 +77,7 @@ function App() {
               <JobDescriptionInput
                 value={jobDescription}
                 onChange={setJobDescription}
+                onClear={() => setJobDescription('')}
               />
 
               <div className="space-y-3">
@@ -88,11 +89,6 @@ function App() {
                 {techStack.length === 0 && (
                   <p className="text-sm text-muted">
                     Select at least one technology to enable analysis.
-                  </p>
-                )}
-                {techStack.length > 0 && !jobDescription.trim() && (
-                  <p className="text-sm text-muted">
-                    Paste a job description to analyze the technical match.
                   </p>
                 )}
               </div>

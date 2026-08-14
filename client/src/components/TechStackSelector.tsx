@@ -15,10 +15,10 @@ export default function TechStackSelector({
   onClear,
 }: TechStackSelectorProps) {
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-xl font-semibold text-primary sm:text-2xl">
+          <h2 className="text-2xl font-semibold tracking-tight text-primary sm:text-3xl">
             Your technology stack
           </h2>
           <p className="mt-1 text-sm text-secondary">
@@ -30,7 +30,7 @@ export default function TechStackSelector({
           <button
             type="button"
             onClick={onClear}
-            className="text-sm font-medium text-secondary underline-offset-4 transition-colors duration-200 hover:text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
+            className="rounded-full bg-action px-4 py-2 text-sm font-semibold text-white transition-colors duration-200 hover:cursor-pointer hover:bg-accent hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action"
           >
             Clear stack
           </button>
@@ -48,8 +48,8 @@ export default function TechStackSelector({
           ))}
         </div>
       ) : (
-        <div className="rounded-2xl border border-dashed border-border bg-background px-4 py-5">
-          <p className="text-sm font-medium text-primary">Start with your tech stack</p>
+        <div className="rounded-2xl border border-dashed border-primary/25 bg-background px-5 py-6">
+          <p className="text-base font-semibold text-primary">Start with your tech stack</p>
           <p className="mt-1 text-sm text-secondary">
             Search and select the technologies you know.
           </p>

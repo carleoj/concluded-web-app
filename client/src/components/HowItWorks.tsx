@@ -21,24 +21,25 @@ const steps = [
 export default function HowItWorks() {
   return (
     <section id="how-it-works" className="scroll-mt-28 px-4 sm:px-6">
-      <div className="mx-auto max-w-6xl rounded-[28px] border border-border bg-surface px-6 py-12 sm:px-10 sm:py-16">
+      <div className="mx-auto max-w-6xl overflow-hidden rounded-[28px] bg-action px-6 py-14 sm:px-10 sm:py-20">
         <div className="max-w-2xl">
-          <h2 className="text-3xl font-semibold tracking-tight text-primary sm:text-4xl">
+          <div aria-hidden="true" className="mb-7 h-2 w-20 bg-accent" />
+          <h2 className="text-4xl font-semibold tracking-[-0.035em] text-white sm:text-5xl">
             How it works
           </h2>
-          <p className="mt-3 text-base leading-7 text-secondary">
+          <p className="mt-4 text-base leading-7 text-white/70">
             Three steps to understand your technical overlap before you apply.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-8 md:grid-cols-3">
+        <div className="mt-12 grid gap-0 border-t border-white/20 md:grid-cols-3">
           {steps.map((step) => (
-            <article key={step.number} className="space-y-4">
-              <p className="text-sm font-semibold tracking-[0.18em] text-muted">
+            <article key={step.number} className="space-y-4 border-b border-white/20 py-8 last:border-b-0 md:border-b-0 md:border-r md:border-white/20 md:px-8 md:first:pl-0 md:last:border-r-0 md:last:pr-0">
+              <p className="text-sm font-semibold tracking-[0.18em] text-accent">
                 {step.number}
               </p>
-              <h3 className="text-xl font-semibold text-primary">{step.title}</h3>
-              <p className="text-sm leading-6 text-secondary">{step.description}</p>
+              <h3 className="text-2xl font-semibold tracking-tight text-white">{step.title}</h3>
+              <p className="text-sm leading-6 text-white/70">{step.description}</p>
             </article>
           ))}
         </div>

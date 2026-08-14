@@ -1,12 +1,13 @@
 interface TechBubbleProps {
   label: string
   onRemove?: () => void
-  variant?: 'selected' | 'matched' | 'missing' | 'detected'
+  variant?: 'selected' | 'matched' | 'inferred' | 'missing' | 'detected'
 }
 
 const variantClasses = {
   selected: 'border-border bg-accent/35 text-primary',
   matched: 'border-success/20 bg-success/8 text-primary',
+  inferred: 'border-accent/40 bg-accent/15 text-primary',
   missing: 'border-border bg-background text-secondary',
   detected: 'border-border bg-surface text-secondary',
 }
@@ -22,6 +23,7 @@ export default function TechBubble({
         className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium ${variantClasses[variant]}`}
       >
         {label}
+
         <button
           type="button"
           onClick={onRemove}

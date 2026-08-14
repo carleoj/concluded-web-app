@@ -29,4 +29,27 @@
   * {
     @apply box-border;
   }
+
+  ::selection {
+    @apply bg-accent text-primary;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-4 outline-action;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply border-[3px] border-background bg-action;
+  }
+}
+
+@layer utilities {
+  .hero-mark {
+    text-shadow: 0 0 60px rgb(231 242 61 / 12%);
+  }
+
 }

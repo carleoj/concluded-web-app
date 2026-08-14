@@ -140,11 +140,11 @@ export default function TechSearch({
         onKeyDown={handleKeyDown}
         placeholder="Search technologies..."
         autoComplete="off"
-        className="w-full rounded-2xl border border-border bg-surface px-4 py-3 text-base text-primary placeholder:text-muted focus:border-primary/20 focus:bg-white focus:outline-none focus:ring-2 focus:ring-accent/60"
+        className="w-full rounded-2xl border border-primary/15 bg-background px-5 py-3.5 text-base text-primary placeholder:text-muted transition-colors focus:border-action focus:bg-surface focus:outline-none focus:ring-4 focus:ring-accent/50"
       />
 
       {isOpen && query.trim() && (
-        <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
+        <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-2xl border border-primary/15 bg-surface shadow-[0_16px_32px_rgb(32_33_36/12%)]">
           {isLoading ? (
             <p className="px-4 py-3 text-sm text-muted">Searching...</p>
           ) : results.length > 0 ? (
@@ -158,10 +158,10 @@ export default function TechSearch({
                     aria-selected={index === activeIndex}
                     onMouseDown={(event) => event.preventDefault()}
                     onClick={() => selectTechnology(name)}
-                    className={`block w-full px-4 py-2.5 text-left text-sm transition-colors duration-150 ${
+                    className={`block w-full px-4 py-3 text-left text-sm font-medium transition-colors duration-150 ${
                       index === activeIndex
-                        ? 'bg-accent/35 text-primary'
-                        : 'text-primary hover:bg-background'
+                        ? 'bg-action text-white'
+                        : 'text-primary hover:bg-primary/10'
                     }`}
                   >
                     {name}
