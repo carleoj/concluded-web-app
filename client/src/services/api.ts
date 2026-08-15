@@ -1,39 +1,31 @@
 import type { AnalyzeResult, TechnologySearchResponse } from '../types'
+import axios from 'axios'
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api'
-
-async function handleResponse<T>(response: Response): Promise<T> {
-  if (!response.ok) {
-    throw new Error('Request failed')
-  }
-
-  return response.json() as Promise<T>
-}
+export const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || '/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
 
 export async function analyzeJob(
   techStack: string[],
   jobDescription: string,
 ): Promise<AnalyzeResult> {
-  const response = await fetch(`${API_BASE}/analyze`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      techStack,
-      jobDescription,
-    }),
+  const { data } = await api.post<AnalyzeResult>('/analyze', {
+    techStack,
+    jobDescription,
   })
 
-  return handleResponse<AnalyzeResult>(response)
+  return data
 }
 
 export async function searchTechnologies(
   query: string,
 ): Promise<string[]> {
-  const params = new URLSearchParams({ search: query })
-  const response = await fetch(`${API_BASE}/technologies?${params}`)
+  const { data } = await api.get<TechnologySearchResponse>('/technologies', {
+    params: { search: query },
+  })
 
-  const data = await handleResponse<TechnologySearchResponse>(response)
   return data.results
 }
