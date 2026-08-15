@@ -18,12 +18,12 @@ export default function TechStackSelector({
     <div className="space-y-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-2xl font-semibold tracking-tight text-primary sm:text-3xl">
+          <span aria-hidden="true" className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-xs p-4 font-semibold text-primary">
+                {1}
+          </span>
+          <h2 className="pt-4 text-2xl font-semibold tracking-tight text-primary sm:text-3xl">
             Your technology stack
           </h2>
-          <p className="mt-1 text-sm text-secondary">
-            Search and select the technologies you already know.
-          </p>
         </div>
 
         {techStack.length > 0 && (
@@ -51,7 +51,7 @@ export default function TechStackSelector({
         <div className="rounded-2xl border border-dashed border-primary/25 bg-background px-5 py-6">
           <p className="text-base font-semibold text-primary">Start with your tech stack</p>
           <p className="mt-1 text-sm text-secondary">
-            Search and select the technologies you know.
+            Search and select the technologies and skills you know.
           </p>
         </div>
       )}

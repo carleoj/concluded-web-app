@@ -138,7 +138,7 @@ export default function TechSearch({
         }}
         onFocus={() => setIsOpen(true)}
         onKeyDown={handleKeyDown}
-        placeholder="Search technologies..."
+        placeholder="Search technologies, e.g., React, GraphQL, Java..."
         autoComplete="off"
         className="w-full rounded-2xl border border-primary/15 bg-background px-5 py-3.5 text-base text-primary placeholder:text-muted transition-colors focus:border-action focus:bg-surface focus:outline-none focus:ring-4 focus:ring-accent/50"
       />

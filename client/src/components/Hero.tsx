@@ -4,7 +4,7 @@ interface HeroProps {
 
 export default function Hero({ onStartAnalyzing }: HeroProps) {
   return (
-    <section className="px-4 pb-8 pt-6 sm:px-6 sm:pb-14 sm:pt-8">
+    <section className="px-4 pb-8 pt-10 sm:px-6 sm:pb-14 sm:pt-12">
       <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[28px] bg-action px-6 py-16 sm:px-10 sm:py-24 lg:px-16">
         <span aria-hidden="true" className="hero-mark pointer-events-none absolute -right-4 -top-16 select-none text-[15rem] font-semibold leading-none tracking-[-0.12em] text-accent/10 sm:text-[22rem]">
           C

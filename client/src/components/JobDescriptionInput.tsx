@@ -11,7 +11,10 @@ export default function JobDescriptionInput({
 }: JobDescriptionInputProps) {
   return (
     <div className="space-y-2">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+      <span aria-hidden="true" className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-xs p-4 font-semibold text-primary">
+        {2}
+      </span>
+      <div className="flex flex-wrap items-baseline justify-between pt-3 gap-x-6 gap-y-1">
         <label
           htmlFor="job-description"
           className="text-xl font-semibold tracking-tight text-primary sm:text-2xl"
