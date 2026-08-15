@@ -28,7 +28,7 @@ export default function TechBubble({
           type="button"
           onClick={onRemove}
           aria-label={`Remove ${label}`}
-          className="rounded-full px-1 text-secondary transition-colors duration-200 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-action"
+          className="hover:cursor-pointer rounded-full px-1 text-secondary transition-colors duration-200 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-action"
         >
           ×
         </button>

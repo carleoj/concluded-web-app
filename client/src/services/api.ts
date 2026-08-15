@@ -22,10 +22,15 @@ export async function analyzeJob(
 
 export async function searchTechnologies(
   query: string,
+  signal?: AbortSignal,
 ): Promise<string[]> {
-  const { data } = await api.get<TechnologySearchResponse>('/technologies', {
-    params: { search: query },
-  })
+  const { data } = await api.get<TechnologySearchResponse>(
+    '/technologies',
+    {
+      params: { search: query },
+      signal,
+    },
+  )
 
   return data.results
 }

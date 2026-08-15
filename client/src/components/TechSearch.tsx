@@ -1,4 +1,5 @@
 import { useEffect, useId, useRef, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { searchTechnologies } from '../services/api'
 
 interface TechSearchProps {
@@ -13,50 +14,39 @@ export default function TechSearch({
   const listboxId = useId()
   const containerRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState<string[]>([])
+  const [debouncedQuery, setDebouncedQuery] = useState('')
   const [isOpen, setIsOpen] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
   const [activeIndex, setActiveIndex] = useState(-1)
 
   useEffect(() => {
-    if (!query.trim()) {
-      setResults([])
-      setIsLoading(false)
-      setActiveIndex(-1)
-      return
-    }
-
-    const controller = new AbortController()
-    const timeoutId = window.setTimeout(async () => {
-      setIsLoading(true)
-
-      try {
-        const matches = await searchTechnologies(query.trim())
-        if (!controller.signal.aborted) {
-          setResults(
-            matches.filter((name) => !selectedTechnologies.includes(name)),
-          )
-          setActiveIndex(matches.length > 0 ? 0 : -1)
-        }
-      } catch (error) {
-        if (!controller.signal.aborted) {
-          console.error(error)
-          setResults([])
-          setActiveIndex(-1)
-        }
-      } finally {
-        if (!controller.signal.aborted) {
-          setIsLoading(false)
-        }
-      }
+    const timeoutId = window.setTimeout(() => {
+      setDebouncedQuery(query.trim())
     }, 250)
 
-    return () => {
-      controller.abort()
-      window.clearTimeout(timeoutId)
-    }
-  }, [query, selectedTechnologies])
+    return () => window.clearTimeout(timeoutId)
+  }, [query])
+
+  const {
+    data: matches = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ['technologies', debouncedQuery],
+    queryFn: ({ signal }) =>
+      searchTechnologies(debouncedQuery, signal),
+    enabled: debouncedQuery.length > 0,
+    staleTime: 60_000,
+  })
+
+  const results = matches.filter(
+    (name) => !selectedTechnologies.includes(name),
+  )
+
+  useEffect(() => {
+    setActiveIndex(results.length > 0 ? 0 : -1)
+  }, [results.length])
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -69,29 +59,36 @@ export default function TechSearch({
     }
 
     document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
   }, [])
 
   function selectTechnology(name: string) {
     onSelect(name)
     setQuery('')
-    setResults([])
+    setDebouncedQuery('')
     setIsOpen(false)
     setActiveIndex(-1)
     inputRef.current?.focus()
   }
 
-  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+  function handleKeyDown(
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) {
     if (!isOpen || results.length === 0) {
       if (event.key === 'ArrowDown' && results.length > 0) {
         setIsOpen(true)
         setActiveIndex(0)
       }
+
       return
     }
 
     if (event.key === 'ArrowDown') {
       event.preventDefault()
+
       setActiveIndex((current) =>
         current < results.length - 1 ? current + 1 : 0,
       )
@@ -99,6 +96,7 @@ export default function TechSearch({
 
     if (event.key === 'ArrowUp') {
       event.preventDefault()
+
       setActiveIndex((current) =>
         current > 0 ? current - 1 : results.length - 1,
       )
@@ -120,6 +118,7 @@ export default function TechSearch({
       <label htmlFor="tech-search" className="sr-only">
         Search technologies
       </label>
+
       <input
         ref={inputRef}
         id="tech-search"
@@ -129,7 +128,9 @@ export default function TechSearch({
         aria-controls={listboxId}
         aria-autocomplete="list"
         aria-activedescendant={
-          activeIndex >= 0 ? `${listboxId}-option-${activeIndex}` : undefined
+          activeIndex >= 0
+            ? `${listboxId}-option-${activeIndex}`
+            : undefined
         }
         value={query}
         onChange={(event) => {
@@ -146,9 +147,19 @@ export default function TechSearch({
       {isOpen && query.trim() && (
         <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-2xl border border-primary/15 bg-surface shadow-[0_16px_32px_rgb(32_33_36/12%)]">
           {isLoading ? (
-            <p className="px-4 py-3 text-sm text-muted">Searching...</p>
+            <p className="px-4 py-3 text-sm text-muted">
+              Searching...
+            </p>
+          ) : isError ? (
+            <p className="px-4 py-3 text-sm text-muted">
+              Failed to search technologies.
+            </p>
           ) : results.length > 0 ? (
-            <ul id={listboxId} role="listbox" className="max-h-60 overflow-y-auto py-1">
+            <ul
+              id={listboxId}
+              role="listbox"
+              className="max-h-60 overflow-y-auto py-1"
+            >
               {results.map((name, index) => (
                 <li key={name} role="presentation">
                   <button
@@ -156,13 +167,14 @@ export default function TechSearch({
                     type="button"
                     role="option"
                     aria-selected={index === activeIndex}
-                    onMouseDown={(event) => event.preventDefault()}
+                    onMouseDown={(event) =>
+                      event.preventDefault()
+                    }
                     onClick={() => selectTechnology(name)}
-                    className={`block w-full px-4 py-3 text-left text-sm font-medium transition-colors duration-150 ${
-                      index === activeIndex
+                    className={`block w-full px-4 py-3 text-left text-sm font-medium transition-colors duration-150 ${index === activeIndex
                         ? 'bg-action text-white'
                         : 'text-primary hover:bg-primary/10'
-                    }`}
+                      }`}
                   >
                     {name}
                   </button>
@@ -170,10 +182,12 @@ export default function TechSearch({
               ))}
             </ul>
           ) : (
-            <p className="px-4 py-3 text-sm text-muted">No technologies found.</p>
+            <p className="px-4 py-3 text-sm text-muted">
+              No technologies found.
+            </p>
           )}
         </div>
       )}
     </div>
   )
-}
+} 
