@@ -10,6 +10,7 @@ import AnalyzeButton from './components/AnalyzeButton'
 import MatchResult from './components/MatchResult'
 import HowItWorks from './components/HowItWorks'
 import TechnologyExplanation from './components/TechnologyExplanation'
+import Footer from './components/Footer'
 
 function App() {
   const analyzerRef = useRef<HTMLElement>(null)
@@ -112,6 +113,7 @@ function App() {
         <HowItWorks />
         <TechnologyExplanation />
       </main>
+      <Footer />
     </div>
   )
 }
