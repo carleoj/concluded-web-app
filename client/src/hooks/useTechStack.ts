@@ -52,7 +52,6 @@ export function useTechStack() {
 
   return {
     techStack,
-    resumeText,
     setResumeText,
     addTechnology,
     removeTechnology,
