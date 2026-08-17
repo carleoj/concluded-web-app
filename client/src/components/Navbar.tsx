@@ -1,6 +1,34 @@
+import { useEffect, useState } from 'react'
+
 export default function Navbar() {
+  const [isVisible, setIsVisible] = useState(true)
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY
+
+    function handleScroll() {
+      const currentScrollY = window.scrollY
+
+      if (currentScrollY < 24) {
+        setIsVisible(true)
+      } else if (Math.abs(currentScrollY - lastScrollY) > 8) {
+        setIsVisible(currentScrollY < lastScrollY)
+      }
+
+      lastScrollY = currentScrollY
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <header className="sticky top-4 z-50 px-4 sm:px-6">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 px-4 py-4 transition-transform duration-300 sm:px-6 ${
+        isVisible ? 'translate-y-0' : '-translate-y-full'
+      }`}
+    >
       <nav
         aria-label="Main navigation"
         className="flex w-full items-center justify-between rounded-2xl border border-primary/10 bg-surface/95 px-5 py-3 shadow-[0_12px_30px_rgb(32_33_36/8%)] backdrop-blur-sm"

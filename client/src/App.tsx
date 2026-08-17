@@ -95,20 +95,22 @@ function App() {
         >
           <div className="mx-auto max-w-6xl border-b border-primary/15 border-t-2 border-t-action px-1 py-10 sm:px-0 sm:py-14">
             <div className="space-y-10">
-              <TechStackSelector
-                techStack={techStack}
-                onAdd={addTechnology}
-                onRemove={removeTechnology}
-                onClear={clearStack}
-                onResumeTextExtracted={handleResumeTextExtracted}
-                isResumeProcessing={isResumeProcessing}
-              />
+              <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-12">
+                <TechStackSelector
+                  techStack={techStack}
+                  onAdd={addTechnology}
+                  onRemove={removeTechnology}
+                  onClear={clearStack}
+                  onResumeTextExtracted={handleResumeTextExtracted}
+                  isResumeProcessing={isResumeProcessing}
+                />
 
-              <JobDescriptionInput
-                value={jobDescription}
-                onChange={setJobDescription}
-                onClear={() => setJobDescription('')}
-              />
+                <JobDescriptionInput
+                  value={jobDescription}
+                  onChange={setJobDescription}
+                  onClear={() => setJobDescription('')}
+                />
+              </div>
 
               <div className="space-y-3">
                 <AnalyzeButton
