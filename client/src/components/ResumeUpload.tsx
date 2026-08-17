@@ -90,16 +90,19 @@ export default function ResumeUpload({
         type="button"
         onClick={openFilePicker}
         disabled={isExtracting}
-        className="rounded-2xl border border-primary/15 bg-background px-5 py-3.5 text-sm font-medium text-primary transition-colors hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-50"
+        title={fileName || 'Upload a PDF resume'}
+        className="max-w-full rounded-full bg-action px-5 py-3.5 text-sm font-semibold text-white transition-colors duration-200 hover:cursor-pointer hover:bg-accent hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-action disabled:cursor-not-allowed disabled:bg-border disabled:text-muted"
       >
-        {isExtracting ? 'Extracting...' : 'Upload Resume'}
+        {isExtracting ? (
+          'Extracting...'
+        ) : fileName && !error ? (
+          <span className="block max-w-48 truncate sm:max-w-64">
+            {fileName}
+          </span>
+        ) : (
+          'Upload resume'
+        )}
       </button>
-
-      {fileName && !error && (
-        <p className="mt-2 text-sm text-muted">
-          {fileName}
-        </p>
-      )}
 
       {error && (
         <p className="mt-2 text-sm text-red-500">

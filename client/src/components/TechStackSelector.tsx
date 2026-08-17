@@ -86,7 +86,7 @@ export default function TechStackSelector({
       )}
 
 
-      <div className="flex items-end gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
         <div className="flex-1">
           <TechSearch
             selectedTechnologies={techStack}
@@ -94,9 +94,11 @@ export default function TechStackSelector({
           />
         </div>
 
-        <ResumeUpload
-          onTextExtracted={onResumeTextExtracted}
-        />
+        <div className="self-end sm:self-auto">
+          <ResumeUpload
+            onTextExtracted={onResumeTextExtracted}
+          />
+        </div>
       </div>
     </div>
   )
