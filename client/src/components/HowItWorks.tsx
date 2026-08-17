@@ -20,7 +20,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="scroll-mt-28 px-4 sm:px-6 pt-5 md:pt-5 sm:pt-10">
+    <section id="how-it-works" className="scroll-mt-28 px-4 sm:px-6 pt-10 md:pt-5 sm:pt-10">
       <div className="mx-auto max-w-6xl overflow-hidden rounded-[28px] bg-action px-6 py-14 sm:px-10 sm:py-20">
         <div className="max-w-2xl">
           <div aria-hidden="true" className="mb-7 h-2 w-20 bg-accent" />
