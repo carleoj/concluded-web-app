@@ -34,3 +34,14 @@ export async function searchTechnologies(
 
   return data.results
 }
+
+export async function analyzeResume(
+  text: string,
+): Promise<string[]> {
+  const { data } = await api.post<{ technologies: string[] }>(
+    '/resume/analyze',
+    { text },
+  )
+
+  return data.technologies
+}
