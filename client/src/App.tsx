@@ -17,7 +17,6 @@ function App() {
   const resultsRef = useRef<HTMLDivElement>(null)
   const {
     techStack,
-    resumeText,
     setResumeText,
     addTechnology,
     removeTechnology,
