@@ -1,11 +1,13 @@
 import TechBubble from './TechBubble'
 import TechSearch from './TechSearch'
+import ResumeUpload from './ResumeUpload'
 
 interface TechStackSelectorProps {
   techStack: string[]
   onAdd: (technology: string) => void
   onRemove: (technology: string) => void
   onClear: () => void
+  onResumeTextExtracted: (text: string) => void
 }
 
 export default function TechStackSelector({
@@ -13,13 +15,14 @@ export default function TechStackSelector({
   onAdd,
   onRemove,
   onClear,
+  onResumeTextExtracted,
 }: TechStackSelectorProps) {
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <span aria-hidden="true" className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-xs p-4 font-semibold text-primary">
-                {1}
+            {1}
           </span>
           <h2 className="pt-4 text-2xl font-semibold tracking-tight text-primary sm:text-3xl">
             Your technology stack
@@ -56,7 +59,19 @@ export default function TechStackSelector({
         </div>
       )}
 
-      <TechSearch selectedTechnologies={techStack} onSelect={onAdd} />
+
+      <div className="flex items-end gap-3">
+        <div className="flex-1">
+          <TechSearch
+            selectedTechnologies={techStack}
+            onSelect={onAdd}
+          />
+        </div>
+
+        <ResumeUpload
+          onTextExtracted={onResumeTextExtracted}
+        />
+      </div>
     </div>
   )
 }

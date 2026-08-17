@@ -5,13 +5,17 @@ const STORAGE_KEY = 'techStack'
 function readStoredStack(): string[] {
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
+
     if (!stored) {
       return []
     }
 
     const parsed = JSON.parse(stored)
+
     return Array.isArray(parsed)
-      ? parsed.filter((item): item is string => typeof item === 'string')
+      ? parsed.filter(
+          (item): item is string => typeof item === 'string',
+        )
       : []
   } catch {
     return []
@@ -20,6 +24,7 @@ function readStoredStack(): string[] {
 
 export function useTechStack() {
   const [techStack, setTechStack] = useState<string[]>(readStoredStack)
+  const [resumeText, setResumeText] = useState('')
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(techStack))
@@ -36,7 +41,9 @@ export function useTechStack() {
   }
 
   function removeTechnology(name: string) {
-    setTechStack((current) => current.filter((tech) => tech !== name))
+    setTechStack((current) =>
+      current.filter((tech) => tech !== name),
+    )
   }
 
   function clearStack() {
@@ -45,6 +52,8 @@ export function useTechStack() {
 
   return {
     techStack,
+    resumeText,
+    setResumeText,
     addTechnology,
     removeTechnology,
     clearStack,

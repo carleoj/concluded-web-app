@@ -15,7 +15,15 @@ import Footer from './components/Footer'
 function App() {
   const analyzerRef = useRef<HTMLElement>(null)
   const resultsRef = useRef<HTMLDivElement>(null)
-  const { techStack, addTechnology, removeTechnology, clearStack } = useTechStack()
+  const {
+    techStack,
+    resumeText,
+    setResumeText,
+    addTechnology,
+    removeTechnology,
+    clearStack,
+  } = useTechStack()
+  console.log('Resume text:', resumeText)
   const [jobDescription, setJobDescription] = useState('')
   const [result, setResult] = useState<AnalyzeResult | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -73,6 +81,7 @@ function App() {
                 onAdd={addTechnology}
                 onRemove={removeTechnology}
                 onClear={clearStack}
+                onResumeTextExtracted={setResumeText}
               />
 
               <JobDescriptionInput
