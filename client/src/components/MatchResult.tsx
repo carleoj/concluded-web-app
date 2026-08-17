@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { AnalyzeResult } from '../types'
 import TechBubble from './TechBubble'
 
+
 interface MatchResultProps {
   result: AnalyzeResult | null
   isLoading: boolean

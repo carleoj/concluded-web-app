@@ -10,7 +10,11 @@ export function extractTechnologies(jobDescription) {
 
     const regex = new RegExp(`(?<![a-z0-9])${escapedAlias}(?![a-z0-9])`, "i");
 
-    if (regex.test(text)) {
+    const match = text.match(regex);
+
+    if (match) {
+      console.log(`Matched "${match[0]}" → ${skill.name} (alias: ${alias})`);
+
       detected.set(skill.name, skill);
     }
   }
@@ -76,9 +80,7 @@ export function compareTechStack(userStack, detectedTechnologies) {
     matched,
     inferred,
     missing,
-    detected: detectedTechnologies.map(
-      (technology) => technology.name
-    ),
+    detected: detectedTechnologies.map((technology) => technology.name),
   };
 }
 

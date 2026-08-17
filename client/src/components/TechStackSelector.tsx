@@ -8,6 +8,7 @@ interface TechStackSelectorProps {
   onRemove: (technology: string) => void
   onClear: () => void
   onResumeTextExtracted: (text: string) => void
+  isResumeProcessing: boolean
 }
 
 export default function TechStackSelector({
@@ -16,6 +17,7 @@ export default function TechStackSelector({
   onRemove,
   onClear,
   onResumeTextExtracted,
+  isResumeProcessing
 }: TechStackSelectorProps) {
   return (
     <div className="space-y-5">
@@ -40,7 +42,31 @@ export default function TechStackSelector({
         )}
       </div>
 
-      {techStack.length > 0 ? (
+      {isResumeProcessing ? (
+        <div
+          aria-live="polite"
+          aria-label="Analyzing resume technologies"
+          className="flex flex-wrap gap-2"
+        >
+          {techStack.map((technology) => (
+            <TechBubble
+              key={technology}
+              label={technology}
+              onRemove={() => onRemove(technology)}
+            />
+          ))}
+
+          {Array.from({ length: 5 }).map((_, index) => (
+            <div
+              key={`skeleton-${index}`}
+              className="h-9 animate-pulse rounded-full bg-black/50"
+              style={{
+                width: `${80 + index * 15}px`,
+              }}
+            />
+          ))}
+        </div>
+      ) : techStack.length > 0 ? (
         <div className="flex flex-wrap gap-2">
           {techStack.map((technology) => (
             <TechBubble

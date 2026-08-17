@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { analyzeJob } from './services/api'
+import { analyzeJob, analyzeResume } from './services/api'
 import type { AnalyzeResult } from './types'
 import { useTechStack } from './hooks/useTechStack'
 import Navbar from './components/Navbar'
@@ -23,12 +23,12 @@ function App() {
     removeTechnology,
     clearStack,
   } = useTechStack()
-  console.log('Resume text:', resumeText)
   const [jobDescription, setJobDescription] = useState('')
   const [result, setResult] = useState<AnalyzeResult | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [hasAnalyzed, setHasAnalyzed] = useState(false)
+  const [isResumeProcessing, setIsResumeProcessing] = useState(false)
 
   const canAnalyze =
     techStack.length > 0 && jobDescription.trim().length > 0 && !isLoading
@@ -39,6 +39,26 @@ function App() {
 
   function scrollToResults() {
     resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
+  async function handleResumeTextExtracted(text: string) {
+    setResumeText(text)
+
+    if (!text.trim()) {
+      return
+    }
+
+    setIsResumeProcessing(true)
+
+    try {
+      const technologies = await analyzeResume(text)
+
+      technologies.forEach(addTechnology)
+    } catch (resumeError) {
+      console.error('Resume analysis failed:', resumeError)
+    } finally {
+      setIsResumeProcessing(false)
+    }
   }
 
   async function handleAnalyze() {
@@ -81,7 +101,8 @@ function App() {
                 onAdd={addTechnology}
                 onRemove={removeTechnology}
                 onClear={clearStack}
-                onResumeTextExtracted={setResumeText}
+                onResumeTextExtracted={handleResumeTextExtracted}
+                isResumeProcessing={isResumeProcessing}
               />
 
               <JobDescriptionInput
