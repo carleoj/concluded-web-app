@@ -17,7 +17,6 @@ function App() {
   const resultsRef = useRef<HTMLDivElement>(null)
   const {
     techStack,
-    setResumeText,
     addTechnology,
     removeTechnology,
     clearStack,
@@ -41,8 +40,6 @@ function App() {
   }
 
   async function handleResumeTextExtracted(text: string) {
-    setResumeText(text)
-
     if (!text.trim()) {
       return
     }
