@@ -24,7 +24,7 @@ function readStoredStack(): string[] {
 
 export function useTechStack() {
   const [techStack, setTechStack] = useState<string[]>(readStoredStack)
-  const [resumeText, setResumeText] = useState('')
+  const [setResumeText] = useState('')
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(techStack))
