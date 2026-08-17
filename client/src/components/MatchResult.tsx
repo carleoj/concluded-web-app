@@ -39,6 +39,14 @@ function TechnologyGroup({
   )
 }
 
+function getScoreColor(score: number) {
+  if (score < 40) return { text: 'text-error', background: 'bg-error' }
+  if (score < 70) {
+    return { text: 'text-[#d97706]', background: 'bg-[#d97706]' }
+  }
+  return { text: 'text-[#15803d]', background: 'bg-[#15803d]' }
+}
+
 export default function MatchResult({
   result,
   isLoading,
@@ -82,7 +90,9 @@ export default function MatchResult({
   const matchedCount = result.matched.length
   const inferredCount = result.inferred.length
   const detectedCount = result.detected.length
-  const roundedScore = Math.round(result.score)
+  const score = Math.min(100, Math.max(0, result.score))
+  const roundedScore = Math.round(score)
+  const scoreColor = getScoreColor(score)
   const directWeight = 1
   const inferredWeight = 0.5
   const directContribution = matchedCount * directWeight
@@ -91,9 +101,24 @@ export default function MatchResult({
   return (
     <section aria-live="polite" className="rounded-[28px] border border-border bg-surface px-6 py-10 sm:px-8">
       <div className="border-b border-border pb-8">
-        <p className="text-5xl font-semibold tracking-tight text-primary sm:text-6xl">{roundedScore}%</p>
+        <p className={`text-5xl font-semibold tracking-tight sm:text-6xl ${scoreColor.text}`}>
+          {roundedScore}%
+        </p>
         <p className="mt-2 text-lg font-medium text-primary">Technical Match</p>
         <p className="mt-2 text-sm text-secondary">{matchedCount} direct + {inferredCount} inferred of {detectedCount} detected technologies</p>
+        <div
+          className="mt-5 h-2 w-full overflow-hidden rounded-full bg-primary/10"
+          role="progressbar"
+          aria-label="Technical match score"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={roundedScore}
+        >
+          <div
+            className={`h-full rounded-full transition-[width] duration-500 ${scoreColor.background}`}
+            style={{ width: `${score}%` }}
+          />
+        </div>
       </div>
 
       <div className="mt-8 border-b border-border pb-8">

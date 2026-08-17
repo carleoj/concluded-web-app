@@ -5,11 +5,11 @@ interface TechBubbleProps {
 }
 
 const variantClasses = {
-  selected: 'border-border bg-accent/35 text-primary',
+  selected: 'border-border bg-accent/65 text-gray',
   matched: 'border-success/20 bg-success/8 text-primary',
   inferred: 'border-accent/40 bg-accent/15 text-primary',
-  missing: 'border-border bg-background text-secondary',
-  detected: 'border-border bg-surface text-secondary',
+  missing: 'border-border bg-background text-black',
+  detected: 'border-border bg-surface text-black',
 }
 
 export default function TechBubble({
@@ -28,7 +28,7 @@ export default function TechBubble({
           type="button"
           onClick={onRemove}
           aria-label={`Remove ${label}`}
-          className="hover:cursor-pointer rounded-full px-1 text-secondary transition-colors duration-200 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-action"
+          className="hover:cursor-pointer rounded-full px-1 text-white transition-colors duration-200 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-action"
         >
           ×
         </button>

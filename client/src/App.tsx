@@ -91,9 +91,10 @@ function App() {
         <section
           ref={analyzerRef}
           id="analyzer"
-          className="scroll-mt-28 px-4 pb-16 sm:px-6"
+          className="analyzer-workspace relative isolate scroll-mt-28 overflow-hidden px-4 py-16 sm:px-6 sm:py-20"
         >
-          <div className="mx-auto max-w-6xl border-b border-primary/15 border-t-2 border-t-action px-1 py-10 sm:px-0 sm:py-14">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_8%_20%,rgb(231_242_61_/_0.16),transparent_25rem),radial-gradient(circle_at_88%_72%,rgb(231_242_61_/_0.11),transparent_28rem)]" />
+          <div className="relative mx-auto max-w-6xl">
             <div className="space-y-10">
               <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-12">
                 <TechStackSelector
@@ -119,7 +120,7 @@ function App() {
                   onClick={handleAnalyze}
                 />
                 {techStack.length === 0 && (
-                  <p className="text-sm text-muted">
+                  <p className="text-sm text-white/60">
                     Select at least one technology to enable analysis.
                   </p>
                 )}
@@ -129,7 +130,7 @@ function App() {
         </section>
 
         {(hasAnalyzed || isLoading || error) && (
-          <div ref={resultsRef} className="scroll-mt-28 px-4 pb-12 sm:px-6">
+          <div ref={resultsRef} className="scroll-mt-28 px-4 pb-5 sm:px-6 sm:pb-5 sm:pt-10 pt-5">
             <div className="mx-auto max-w-6xl">
               <MatchResult
                 result={result}

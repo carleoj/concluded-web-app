@@ -141,17 +141,17 @@ export default function TechSearch({
         onKeyDown={handleKeyDown}
         placeholder="Search technologies, e.g., React, GraphQL, Java..."
         autoComplete="off"
-        className="w-full rounded-2xl border border-primary/15 bg-background px-5 py-3.5 text-base text-primary placeholder:text-muted transition-colors focus:border-action focus:bg-surface focus:outline-none focus:ring-4 focus:ring-accent/50"
+        className="glass-input w-full rounded-2xl px-5 py-3.5 text-base placeholder:text-white/45 transition-colors focus:outline-none"
       />
 
       {isOpen && query.trim() && (
-        <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-2xl border border-primary/15 bg-surface shadow-[0_16px_32px_rgb(32_33_36/12%)]">
+        <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-2xl border border-white/15 bg-[#161619]/95 shadow-[0_16px_32px_rgb(0_0_0/35%)] backdrop-blur-xl">
           {isLoading ? (
-            <p className="px-4 py-3 text-sm text-muted">
+            <p className="px-4 py-3 text-sm text-white/55">
               Searching...
             </p>
           ) : isError ? (
-            <p className="px-4 py-3 text-sm text-muted">
+            <p className="px-4 py-3 text-sm text-white/55">
               Failed to search technologies.
             </p>
           ) : results.length > 0 ? (
@@ -173,7 +173,7 @@ export default function TechSearch({
                     onClick={() => selectTechnology(name)}
                     className={`block w-full px-4 py-3 text-left text-sm font-medium transition-colors duration-150 ${index === activeIndex
                         ? 'bg-action text-white'
-                        : 'text-primary hover:bg-primary/10'
+                        : 'text-white hover:bg-white/10'
                       }`}
                   >
                     {name}
@@ -182,7 +182,7 @@ export default function TechSearch({
               ))}
             </ul>
           ) : (
-            <p className="px-4 py-3 text-sm text-muted">
+            <p className="px-4 py-3 text-sm text-white/55">
               No technologies found.
             </p>
           )}

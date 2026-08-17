@@ -26,7 +26,7 @@ export default function TechStackSelector({
           <span aria-hidden="true" className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent text-xs p-4 font-semibold text-primary">
             {1}
           </span>
-          <h2 className="pt-4 text-2xl font-semibold tracking-tight text-primary sm:text-3xl">
+          <h2 className="pt-4 text-2xl font-semibold tracking-tight text-white sm:text-3xl">
             Your technology stack
           </h2>
         </div>
@@ -59,7 +59,7 @@ export default function TechStackSelector({
           {Array.from({ length: 5 }).map((_, index) => (
             <div
               key={`skeleton-${index}`}
-              className="h-9 animate-pulse rounded-full bg-black/50"
+              className="h-9 animate-pulse rounded-full border border-white/15 bg-white/15 shadow-[0_0_20px_rgb(231_242_61/10%)]"
               style={{
                 width: `${80 + index * 15}px`,
               }}
@@ -77,9 +77,9 @@ export default function TechStackSelector({
           ))}
         </div>
       ) : (
-        <div className="rounded-2xl border border-dashed border-primary/25 bg-background px-5 py-6">
-          <p className="text-base font-semibold text-primary">Start with your tech stack</p>
-          <p className="mt-1 text-sm text-secondary">
+        <div className="rounded-2xl border border-dashed border-white/25 bg-white/[0.05] px-5 py-6 backdrop-blur-md">
+          <p className="text-base font-semibold text-white">Start with your tech stack</p>
+          <p className="mt-1 text-sm text-white/60">
             Search and select the technologies and skills you know.
           </p>
         </div>

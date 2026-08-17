@@ -17,7 +17,7 @@ export default function JobDescriptionInput({
       <div className="flex flex-wrap items-baseline justify-between pt-3 gap-x-6 gap-y-1">
         <label
           htmlFor="job-description"
-          className="text-xl font-semibold tracking-tight text-primary sm:text-2xl"
+          className="text-xl font-semibold tracking-tight text-white sm:text-2xl"
         >
           Job description
         </label>
@@ -37,7 +37,7 @@ export default function JobDescriptionInput({
         onChange={(event) => onChange(event.target.value)}
         placeholder="Paste the full job description here..."
         rows={7}
-        className="resize-none mt-4 min-h-44 w-full rounded-[18px] border border-primary/15 bg-background px-5 py-4 text-base leading-7 text-primary placeholder:text-muted transition-colors focus:border-action focus:bg-surface focus:outline-none focus:ring-4 focus:ring-accent/50"
+        className="glass-input resize-none mt-4 min-h-44 w-full rounded-[18px] px-5 py-4 text-base leading-7 placeholder:text-white/45 transition-colors focus:outline-none"
       />
     </div>
   )
