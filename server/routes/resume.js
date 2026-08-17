@@ -1,5 +1,5 @@
 import express from 'express';
-import { extractTechnologies } from '../services/jobAnalyzer.js';
+import { extractResumeTechnologies } from '../services/jobAnalyzer.js';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.post('/analyze', (req, res) => {
         });
     }
 
-    const detectedTechnologies = extractTechnologies(text);
+    const detectedTechnologies = extractResumeTechnologies(text);
 
     res.json({
         technologies: detectedTechnologies.map(

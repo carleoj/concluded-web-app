@@ -116,3 +116,48 @@ function getImpliedSkills(skill, visited = new Set()) {
 
   return implied;
 }
+
+export function extractResumeTechnologies(resumeText) {
+    const detected = new Map();
+
+    const text = resumeText.toLowerCase();
+
+    const GENERIC_ALIASES = new Set([
+        'ai',
+        'c',
+        'front',
+        'io',
+        'js',
+        'page',
+        'request',
+        'tools'
+    ]);
+
+    for (const [alias, skill] of technologyIndex) {
+        if (GENERIC_ALIASES.has(alias)) {
+            continue;
+        }
+
+        const escapedAlias = alias.replace(
+            /[.*+?^${}()|[\]\\]/g,
+            '\\$&'
+        );
+
+        const regex = new RegExp(
+            `(?<![a-z0-9])${escapedAlias}(?![a-z0-9])`,
+            'i'
+        );
+
+        const match = text.match(regex);
+
+        if (match) {
+            console.log(
+                `Resume match "${match[0]}" → ${skill.name} (alias: ${alias})`
+            );
+
+            detected.set(skill.name, skill);
+        }
+    }
+
+    return [...detected.values()];
+}
