@@ -84,6 +84,7 @@ function App() {
       <Navbar />
       <main>
         <Hero onStartAnalyzing={scrollToAnalyzer} />
+        <HowItWorks />
 
         <section
           ref={analyzerRef}
@@ -139,7 +140,6 @@ function App() {
           </div>
         )}
 
-        <HowItWorks />
         <TechnologyExplanation />
       </main>
       <Footer />

@@ -41,7 +41,7 @@ export default function Navbar() {
             <img
               src="/logo-white.png"
               alt="Concluded logo"
-              className="h-8 w-8 object-contain"
+              className="h-8 w-8 object-contain rounded-full"
             />
 
             <span
